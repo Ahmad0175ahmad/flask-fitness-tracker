@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST" class="tracker-form">
+  <input type="text" name="exercise" placeholder="Exercise name" required>
+  <input type="number" name="duration" placeholder="Duration (min)" required>
+  <input type="number" name="calories" placeholder="Calories burned" required>
+  <button type="submit">Add Workout</button>
+</form>
+
+{% if workouts %}
+  <div class="summary">
+    <p>Total Duration: <strong>{{ total_time }} mins</strong></p>
+    <p>Total Calories Burned: <strong>{{ total_calories }}</strong></p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Exercise</th>
+        <th>Duration (min)</th>
+        <th>Calories</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for w in workouts %}
+      <tr>
+        <td>{{ w.exercise }}</td>
+        <td>{{ w.duration }}</td>
+        <td>{{ w.calories }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <form method="POST" action="{{ url_for('clear') }}">
+    <button class="clear-btn" type="submit">Clear All Workouts</button>
+  </form>
+{% else %}
+  <p class="no-data">No workouts added yet. Start tracking your fitness!</p>
+{% endif %}
+
+{% endblock %}
